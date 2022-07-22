@@ -22,8 +22,9 @@ if ($_GET['id']) {
         $f_name = $data['first_name'];
         $l_name = $data['last_name'];
         $email = $data['email'];
-        $date_of_birth = $data['date_of_birth'];
+        $address = $data['address'];
         $picture = $data['picture'];
+        $phone = $data['phone'];
     }
 }
 //the POST method will delete the user permanently
@@ -79,7 +80,7 @@ mysqli_close($connect);
             <tr>
                 <td><?php echo "$f_name $l_name" ?></td>
                 <td><?php echo $email ?></td>
-                <td><?php echo $date_of_birth ?></td>
+                <td><?php echo $address ?></td>
             </tr>
         </table>
         <h3 class="mb-4">Do you really want to delete this user?</h3>

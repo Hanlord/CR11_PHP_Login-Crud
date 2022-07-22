@@ -18,18 +18,24 @@ require_once '../../components/file_upload.php';
 
 if ($_POST) {
     $name = $_POST['name'];
-    $price = $_POST['price'];
-    $animal = $_POST['animal'];
+    $picture = $_POST['picture'];
+    $location = $_POST['live_location'];
+    $description = $_POST['description'];
+    $size = $_POST['size'];
+    $age = $_POST['age'];
+    $vaccinated = $_POST['vaccinated'];
+    $breed = $_POST['breed'];
+    $status = $_POST['status'];
     $id = $_POST['id'];
     //variable for upload pictures errors is initialised
     $uploadError = '';
 
-    $picture = file_upload($_FILES['picture'], 'animal'); //file_upload() called  
+    $picture = file_upload($_FILES['picture']); //file_upload() called  
     if ($picture->error === 0) {
-        ($_POST["picture"] == "animal.png") ?: unlink("../pictures/$_POST[picture]");
-        $sql = "UPDATE animal SET name = '$name', price = $price, picture = '$picture->fileName', fk_animalId = $animal WHERE id = {$id}";
+        ($_POST["picture"] == "admavatar.png") ?: unlink("../../pictures/$_POST[picture]");
+        $sql = "UPDATE animal SET name = '$name', picture = '$picture->fileName',  live_location = '$location', description = '$description', size = '$size', age='$age', vaccinated='$vaccinated', breed='$breed', status='$status' WHERE id = {$id}";
     } else {
-        $sql = "UPDATE animal SET name = '$name', price = $price, fk_animalId = $animal WHERE id = {$id}";
+        $sql = "UPDATE animal SET name = '$name', picture = '$picture->fileName',  live_location = '$location', description = '$description', size = '$size', age='$age', vaccinated='$vaccinated', breed='$breed', status='$status' WHERE id = {$id}";
     }
     if (mysqli_query($connect, $sql) === TRUE) {
         $class = "success";
@@ -68,4 +74,5 @@ if ($_POST) {
         </div>
     </div>
 </body>
+
 </html>

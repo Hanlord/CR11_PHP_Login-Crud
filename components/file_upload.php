@@ -4,7 +4,7 @@ function file_upload($picture, $source = 'user')
     $result = new stdClass(); //this object will carry status from file upload
     $result->fileName = 'avatar.png';
     if (isset($_SESSION['adm'])) {
-        $result->fileName = 'animal.png';
+        $result->fileName = 'product.png';
     }
     $result->error = 1; //it could also be a boolean true/false
     //collect data from object $picture
@@ -27,7 +27,7 @@ function file_upload($picture, $source = 'user')
                     if ($source == 'animal') {
                         $destination = "../../pictures/$fileNewName";
                     } elseif ($source == 'user') {
-                        $destination = "pictures/$fileNewName";
+                        $destination = "../../pictures/$fileNewName";
                     }
                     if (move_uploaded_file($fileTmpName, $destination)) {
                         $result->error = 0;

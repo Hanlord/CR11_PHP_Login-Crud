@@ -20,7 +20,7 @@ if ($_GET['id']) {
     $data = mysqli_fetch_assoc($result);
     if (mysqli_num_rows($result) == 1) {
         $name = $data['name'];
-        $price = $data['price'];
+        $location = $data['live_location'];
         $picture = $data['picture'];
     } else {
         header("location: error.php");
@@ -55,7 +55,7 @@ if ($_GET['id']) {
 
 <body>
     <fieldset>
-        <legend class='h2 mb-3'>Delete request <img class='img-thumbnail rounded-circle' src='pictures/<?php echo $picture ?>' alt="<?php echo $name ?>"></legend>
+        <legend class='h2 mb-3'>Delete request <img class='img-thumbnail rounded-circle' src='../pictures/<?php echo $picture ?>' alt="<?php echo $name ?>"></legend>
         <h5>You have selected the data below:</h5>
         <table class="table w-75 mt-3">
             <tr>

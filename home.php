@@ -17,6 +17,28 @@ if (!isset($_SESSION['adm']) && !isset($_SESSION['user'])) {
 $res = mysqli_query($connect, "SELECT * FROM users WHERE id=" . $_SESSION['user']);
 $row = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
+$sql = "SELECT * FROM animal";
+$result = mysqli_query($connect ,$sql);
+$tbody= ''; 
+if(mysqli_num_rows($result)  > 0) {     
+    while($rowa = mysqli_fetch_array($result, MYSQLI_ASSOC)){ 
+      $tbody .= "
+      <div class='container mt-2 col-lg-4 rows-col-md-2 rows-col-sm-1 d-flex justify-content-center animate__animated animate__fadeInLeft'>
+      <div class='card' style='width: 18rem;'>
+<img src='pictures/" . $rowa['picture'] . "' class='card-img-top' alt='...'>
+<div class='card-body'>
+  <h5 class='card-title'>" . $rowa['name'] . "</h5>
+  <p> ".$rowa['live_location']. "</p>
+</div>
+</div>
+    </div>"
+      ;
+   };
+} else {
+    $tbody =  "<tr><td colspan='5'><center>No Data Available </center></td></tr>";
+}
+
+
 mysqli_close($connect);
 ?>
 
@@ -42,6 +64,8 @@ mysqli_close($connect);
 </head>
 
 <body>
+<?php require_once 'components/navbar.php' ?>
+<br>
     <div class="container">
         <div class="hero">
             <img class="userImage" src="pictures/<?php echo $row['picture']; ?>" alt="<?php echo $row['first_name']; ?>">
@@ -50,5 +74,12 @@ mysqli_close($connect);
         <a href="logout.php?logout" class="btn btn-danger">Sign Out</a>
         <a href="update.php?id=<?php echo $_SESSION['user'] ?>" class="btn btn-warning">Update your profile</a>
     </div>
+    <br>
+    <div class="container">
+        <br>
+        <div class="row rows-col-lg-4 rows-col-md-2 rows-col-sm-1 animate__animated animate__fadeInLeft">
+          <?= $tbody ?>
+        </div>
+      </div>
 </body>
 </html>

@@ -68,12 +68,14 @@ mysqli_close($connect);
 </head>
 
 <body>
+<?php require_once 'components/navbar.php' ?>
+<br>
     <div class="container">
         <div class="row">
             <div class="col-2">
                 <img class="userImage" src="pictures/admavatar.png" alt="Adm avatar">
                 <p class="">Administrator</p>
-                <a class="btn btn-success" href="animal/index.php">animal</a>
+                <a class="btn btn-success" href="animal/index.php">Animals</a>
                 <a class="btn btn-danger" href="logout.php?logout">Sign Out</a>
             </div>
             <div class="col-8 mt-2">

@@ -16,25 +16,26 @@ require_once '../../components/file_upload.php';
 
 if ($_POST) {
     $name = $_POST['name'];
-    $price = $_POST['price'];
-    $animal = $_POST['animal'];
+    $location = $_POST['live_location'];
+    $description = $_POST['description'];
+    $size = $_POST['size'];
+    $age = $_POST['age'];
+    $vaccinated = $_POST['vaccinated'];
+    $breed = $_POST['breed'];
+    $status = $_POST['status'];
     $uploadError = '';
     //this function exists in the service file upload.
-    $picture = file_upload($_FILES['picture'], 'product');
+    $picture = file_upload($_FILES['picture'], 'animal');
 
-    if ($animal == 'none') {
-        //checks if the animal is undefined and insert null in the DB
-        $sql = "INSERT INTO animal (name, price, picture, fk_animalId) VALUES ('$name', $price, '$picture->fileName', null)";
-    } else {
-        $sql = "INSERT INTO animal (name, price, picture, fk_animalId) VALUES ('$name', $price, '$picture->fileName', $animal)";
-    }
+    $sql = "INSERT INTO animal (name, live_location, picture, description, size, age, vaccinated, breed, status) VALUES ('$name', '$location', '$picture->fileName', '$description', '$size', '$age', '$vaccinated', '$breed', '$status')";
+
 
     if (mysqli_query($connect, $sql) === true) {
         $class = "success";
         $message = "The entry below was successfully created <br>
             <table class='table w-50'><tr>
             <td> $name </td>
-            <td> $price </td>
+            <td> $location </td>
             </tr></table><hr>";
         $uploadError = ($picture->error != 0) ? $picture->ErrorMessage : '';
     } else {
@@ -70,4 +71,5 @@ if ($_POST) {
         </div>
     </div>
 </body>
+
 </html>

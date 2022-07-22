@@ -18,9 +18,9 @@ $tbody = ''; //this variable will hold the body for the table
 if (mysqli_num_rows($result)  > 0) {
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
         $tbody .= "<tr>
-            <td><img class='img-thumbnail' src='pictures/" . $row['picture'] . "'</td>
+            <td><img class='img-thumbnail' src='../pictures/" . $row['picture'] . "'</td>
             <td>" . $row['name'] . "</td>
-            <td>" . $row['price'] . "</td>
+            <td>" . $row['live_location'] . "</td>
             <td><a href='update.php?id=" . $row['id'] . "'><button class='btn btn-primary btn-sm' type='button'>Edit</button></a>
             <a href='delete.php?id=" . $row['id'] . "'><button class='btn btn-danger btn-sm' type='button'>Delete</button></a></td>
             </tr>";
@@ -38,7 +38,7 @@ mysqli_close($connect);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP CRUD</title>
+    <title>Animals</title>
     <?php require_once '../components/boot.php' ?>
     <style type="text/css">
         .manageProduct {
@@ -62,6 +62,7 @@ mysqli_close($connect);
 </head>
 
 <body>
+<?php require_once '../components/navbar.php' ?>
     <div class="manageProduct w-75 mt-3">
         <div class='mb-3'>
             <a href="create.php"><button class='btn btn-primary' type="button">Add animal</button></a>
@@ -73,7 +74,7 @@ mysqli_close($connect);
                 <tr>
                     <th>Picture</th>
                     <th>Name</th>
-                    <th>price</th>
+                    <th>Location</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -82,5 +83,6 @@ mysqli_close($connect);
             </tbody>
         </table>
     </div>
+    <?php require_once '../components/footer.php' ?>
 </body>
 </html>

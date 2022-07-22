@@ -17,7 +17,7 @@ $result = mysqli_query($connect, "SELECT * FROM animal");
 
 while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
     $animal .=
-        "<option value='{$row['animalId']}'>{$row['sup_name']}</option>";
+        "<option value='{$row['id']}'>{$row['name']}</option>";
 }
 ?>
 
@@ -60,7 +60,6 @@ while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
                     <td>
                         <select class="form-select" name="size" aria-label="Default select example">
                             <?php echo $animal; ?>
-                            <option selected value='none'>none</option>
                             <option value='small'>small</option>
                             <option value='large'>large</option>
                         </select>
