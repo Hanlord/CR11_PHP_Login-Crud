@@ -17,7 +17,7 @@
         <li class="nav-item">
           <a class="nav-link text-light" href="index.php">Login</a>
         </li>
-        <form method='GET'>
+        <form method='GET' action="senior.php">
           <input class='btn btn-success' type='submit' name='submit2' value='Senior'>
         </form>
       </ul>

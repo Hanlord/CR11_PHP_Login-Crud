@@ -14,25 +14,10 @@ if (!isset($_SESSION['adm']) && !isset($_SESSION['user'])) {
 }
 
 require_once 'components/db_connect.php';
-
-if (isset($_POST["submit"])) {
-    $animal_id = $_POST["id"];
-    $user_id = $_SESSION["user"];
-    // $adoption_date = $_POST["adoption_date"];
-
-    $sql1 = "INSERT INTO pet_adoption(fk_animal_id, fk_user_id) VALUES ($animal_id,$user_id)";
-    $sql2 = "UPDATE animal set status = 'adopted' WHERE id = $animal_id";
-    $result2 = mysqli_query($connect, $sql2);
-    $result3 = mysqli_query($connect, $sql1);
-    if ($result3 && $result2) {
-        echo "Success";
-        mysqli_close($connect);
-        header("Location: home.php");
-    } else {
-        echo "Error";
-    }
-}
-
+$sql = "SELECT * FROM animal WHERE status = 'available'";
+$res = mysqli_query($connect, "SELECT * FROM users WHERE id=" . $_SESSION['user']);
+$row = mysqli_fetch_array($res, MYSQLI_ASSOC);
+$result = mysqli_query($connect, $sql);
 if (isset($_GET["submit2"])) {
     htmlentities($_GET['submit2']);
     $age_id = $_GET["submit2"];
@@ -63,37 +48,6 @@ if (isset($_GET["submit2"])) {
         $tbody2 =  "<tr><td colspan='5'><center>No Data Available </center></td></tr>";
     }
 }
-
-
-// select logged-in users details - procedural style
-$sql = "SELECT * FROM animal WHERE status = 'available'";
-$res = mysqli_query($connect, "SELECT * FROM users WHERE id=" . $_SESSION['user']);
-$row = mysqli_fetch_array($res, MYSQLI_ASSOC);
-$result = mysqli_query($connect, $sql);
-$tbody = '';
-if (mysqli_num_rows($result)  > 0) {
-    while ($rowa = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-        $tbody .= "
-      <div class='container mt-2 col-lg-4 rows-col-md-2 rows-col-sm-1 d-flex justify-content-center animate__animated animate__fadeInLeft'>
-      <div class='card' style='width: 18rem;'>
-<img src='pictures/" . $rowa['picture'] . "' class='card-img-top' alt='...'>
-<div class='card-body'>
-  <h5 class='card-title'>" . $rowa['name'] . "</h5>
-  <p> " . $rowa['live_location'] . "</p>
-  <p> " . $rowa['age'] . "</p>
-  <p> " . $rowa['status'] . "</p>
-  <form method='POST'>
-  <input class='btn btn-success' type='submit' name='submit' value='take me Home'>
-  </form>
-</div>
-</div>
-    </div>";
-    };
-} else {
-    $tbody =  "<tr><td colspan='5'><center>No Data Available </center></td></tr>";
-}
-
-
 mysqli_close($connect);
 
 ?>
@@ -134,7 +88,7 @@ mysqli_close($connect);
     <div class="container">
         <br>
         <div class="row rows-col-lg-4 rows-col-md-2 rows-col-sm-1 animate__animated animate__fadeInLeft">
-            <?= $tbody ?>
+            <?= $tbody2 ?>
         </div>
     </div>
     <?php require_once 'components/footer.php' ?>
