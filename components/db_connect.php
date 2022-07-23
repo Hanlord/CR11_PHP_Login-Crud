@@ -1,9 +1,9 @@
 <?php
 
-$localhost = "127.0.0.1";
-$username = "root";
-$password = "";
-$dbname = "be16_cr11_animal_adoption_wehan";
+$localhost = "173.212.235.205";
+$username = "wehancodefactory_root";
+$password = "Fm&7FQYWO].k";
+$dbname = "wehancodefactory_petadopt";
 
 // create connection
 $connect = new  mysqli($localhost, $username, $password, $dbname);

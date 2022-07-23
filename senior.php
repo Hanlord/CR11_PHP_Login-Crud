@@ -9,7 +9,7 @@ if (isset($_SESSION['adm'])) {
 }
 // if session is not set this will redirect to login page
 if (!isset($_SESSION['adm']) && !isset($_SESSION['user'])) {
-    header("Location: index.php");
+    header("Location: animal/index.php");
     exit;
 }
 

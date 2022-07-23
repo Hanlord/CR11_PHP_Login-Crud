@@ -68,7 +68,7 @@ mysqli_close($connect);
 </head>
 
 <body>
-    <?php require_once '../components/navbar.php' ?>
+    <?php require_once '../components/navbar2.php' ?>
     <div class="manageProduct w-75 mt-3">
         <div class='mb-3'>
             <a href="create.php"><button class='btn btn-primary' type="button">Add animal</button></a>
