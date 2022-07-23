@@ -75,7 +75,7 @@ mysqli_close($connect);
     <style>
     .hero {
       width: 100%;
-      height: 20rem;
+      height: 30rem;
       background-image: url("pictures/hero.jpg");
       background-position: center;
       background-repeat: no-repeat;
@@ -117,8 +117,14 @@ mysqli_close($connect);
             <hr />
             <button class="btn btn-block btn-primary" type="submit" name="btn-login">Sign In</button>
             <hr />
-            <a href="register.php">Not registered yet? Click here</a>
+            <a href="register.php" class="btn btn-block btn-warning">Not registered yet? Click here</a>
         </form>
+        <br>
+        <br>
+        <br>
+    </div>
+    <div class="mt-5">
+    <?php require_once 'components/footer.php' ?>
     </div>
 </body>
 </html>

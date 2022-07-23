@@ -9,16 +9,16 @@
     <div class=" collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link text-light" aria-current="page" href="home.php">Home</a>
+          <a class="nav-link text-light" aria-current="page" href="../home.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light" href="logout.php?logout">Sign Out</a>
+          <a class="nav-link text-light" href="../logout.php?logout">Sign Out</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-light" href="index.php">Login</a>
         </li>
-        <form method='GET' action="senior.php">
-          <input class='btn btn-success' type='submit' name='submit2' value='Senior'>
+        <form method='GET' action="../senior.php">
+          <input class='btn btn-success' type='submit' name='submit2' value='senior'>
         </form>
       </ul>
     </div>
