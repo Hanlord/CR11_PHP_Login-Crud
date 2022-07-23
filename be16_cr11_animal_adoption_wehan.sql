@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 23, 2022 at 10:00 AM
+-- Generation Time: Jul 23, 2022 at 12:03 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -47,10 +47,10 @@ CREATE TABLE `animal` (
 --
 
 INSERT INTO `animal` (`id`, `name`, `picture`, `live_location`, `description`, `size`, `age`, `vaccinated`, `breed`, `status`) VALUES
-(11, 'LionKing', '62dadd2da511a.jpg', 'Vienna', 'The next King', 'large', 2, 'false', 'savanna', 'available'),
-(12, 'T-Rex', '62dadd87c8826.jpg', 'Jurrassic Park', 'He is back!', 'large', 8, 'false', 'Labor', 'available'),
-(13, 'Bugs Bunny', '62daddfa4bf98.jpg', 'farm yard', 'fast and furious', 'small', 3, 'true', 'egg', 'available'),
-(14, 'ChickenNugget', '62dade469669a.jpg', 'farm yard', 'hot and crispy', 'small', 8, 'true', 'egg', 'available'),
+(11, 'LionKing', '62dbc5a250fc9.jpg', 'Vienna', 'The next King', 'small', 2, 'true', 'savanna', 'available'),
+(12, 'T-Rex', '62dadd87c8826.jpg', 'Jurrassic Park', 'He is back!', 'large', 8, 'false', 'Labor', 'adopted'),
+(13, 'Bugs Bunny', '62dbc579c6466.jpg', 'farm yard', 'fast and furious', 'small', 3, 'true', 'egg', 'available'),
+(14, 'ChickenNugget', '62dade469669a.jpg', 'farm yard', 'hot and crispy', 'small', 8, 'true', 'egg', 'adopted'),
 (15, 'Bahamut', '62db7b55d7e36.jpg', 'Fantasy', 'King of the Air', 'small', 9, 'true', 'Heaven', 'adopted'),
 (16, 'Lazykittie', '62dadf3c1b391.jpg', 'Vienna', 'dont touch not sweet', 'small', 2, 'true', 'garden', 'available'),
 (17, 'CryParrot', '62dadfaf6f748.jpg', 'Vienna', 'can dance and sing', 'small', 10, 'true', 'garden', 'adopted'),
@@ -70,6 +70,17 @@ CREATE TABLE `pet_adoption` (
   `fk_user_id` int(11) NOT NULL,
   `adoption_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pet_adoption`
+--
+
+INSERT INTO `pet_adoption` (`id`, `fk_animal_id`, `fk_user_id`, `adoption_date`) VALUES
+(2, 11, 2, '2022-07-23'),
+(3, 13, 2, '2022-07-31'),
+(4, 12, 2, '2022-07-24'),
+(5, 14, 2, '2022-07-31'),
+(6, 12, 2, '2022-07-22');
 
 -- --------------------------------------------------------
 
@@ -135,7 +146,7 @@ ALTER TABLE `animal`
 -- AUTO_INCREMENT for table `pet_adoption`
 --
 ALTER TABLE `pet_adoption`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`

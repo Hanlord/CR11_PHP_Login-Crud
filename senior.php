@@ -14,6 +14,22 @@ if (!isset($_SESSION['adm']) && !isset($_SESSION['user'])) {
 }
 
 require_once 'components/db_connect.php';
+if (isset($_POST["submit"])) {
+    $animal_id = $_GET["id"];
+    $user_id = $_SESSION["user"];
+
+    $sql1 = "INSERT INTO pet_adoption(fk_animal_id, fk_user_id) VALUES ($animal_id,$user_id)";
+    $sql2 = "UPDATE animal set status = 'adopted' WHERE id = $animal_id";
+    $result2 = mysqli_query($connect, $sql2);
+    $result3 = mysqli_query($connect, $sql1);
+    if ($result3 && $result2) {
+        echo "Success";
+        mysqli_close($connect);
+        header("Location: home.php");
+    } else {
+        echo "Error";
+    }
+}
 $sql = "SELECT * FROM animal WHERE status = 'available'";
 $res = mysqli_query($connect, "SELECT * FROM users WHERE id=" . $_SESSION['user']);
 $row = mysqli_fetch_array($res, MYSQLI_ASSOC);
@@ -34,12 +50,10 @@ if (isset($_GET["submit2"])) {
     <img src='pictures/" . $rowb['picture'] . "' class='card-img-top' alt='...'>
     <div class='card-body'>
       <h5 class='card-title'>" . $rowb['name'] . "</h5>
-      <p> " . $rowb['live_location'] . "</p>
-      <p> " . $rowb['age'] . "</p>
-      <p> " . $rowb['status'] . "</p>
-      <form method='POST'>
-      <input class='btn btn-success' type='submit' name='submit' value='take me Home'>
-      </form>
+      <p>Location: " . $rowb['live_location'] . "</p>
+      <p>Age: " . $rowb['age'] . "</p>
+      <p>Status: " . $rowb['status'] . "</p>
+      <td><a class='btn btn-primary' href='adopt.php?id=" . $rowb['id'] . "'>Take me Home</a></td>
     </div>
     </div>
         </div>";
@@ -91,6 +105,7 @@ mysqli_close($connect);
             <?= $tbody2 ?>
         </div>
     </div>
+    <br>
     <?php require_once 'components/footer.php' ?>
 </body>
 

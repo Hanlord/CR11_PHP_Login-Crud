@@ -16,9 +16,8 @@ if (!isset($_SESSION['adm']) && !isset($_SESSION['user'])) {
 require_once 'components/db_connect.php';
 
 if (isset($_POST["submit"])) {
-    $animal_id = $_POST["id"];
+    $animal_id = $_GET["id"];
     $user_id = $_SESSION["user"];
-    // $adoption_date = $_POST["adoption_date"];
 
     $sql1 = "INSERT INTO pet_adoption(fk_animal_id, fk_user_id) VALUES ($animal_id,$user_id)";
     $sql2 = "UPDATE animal set status = 'adopted' WHERE id = $animal_id";
@@ -49,12 +48,10 @@ if (isset($_GET["submit2"])) {
     <img src='pictures/" . $rowb['picture'] . "' class='card-img-top' alt='...'>
     <div class='card-body'>
       <h5 class='card-title'>" . $rowb['name'] . "</h5>
-      <p> " . $rowb['live_location'] . "</p>
-      <p> " . $rowb['age'] . "</p>
-      <p> " . $rowb['status'] . "</p>
-      <form method='POST'>
-      <input class='btn btn-success' type='submit' name='submit' value='take me Home'>
-      </form>
+      <p>Location: " . $rowb['live_location'] . "</p>
+      <p>Age: " . $rowb['age'] . "</p>
+      <p>Status: " . $rowb['status'] . "</p>
+      <td><a class='btn btn-primary' href='adopt.php?id=" . $rowb['id'] . "'>Take me Home</a></td>
     </div>
     </div>
         </div>";
@@ -79,12 +76,10 @@ if (mysqli_num_rows($result)  > 0) {
 <img src='pictures/" . $rowa['picture'] . "' class='card-img-top' alt='...'>
 <div class='card-body'>
   <h5 class='card-title'>" . $rowa['name'] . "</h5>
-  <p> " . $rowa['live_location'] . "</p>
-  <p> " . $rowa['age'] . "</p>
-  <p> " . $rowa['status'] . "</p>
-  <form method='POST'>
-  <input class='btn btn-success' type='submit' name='submit' value='take me Home'>
-  </form>
+  <p>Location: " . $rowa['live_location'] . "</p>
+  <p>Age: " . $rowa['age'] . "</p>
+  <p>Status: " . $rowa['status'] . "</p>
+  <td><a class='btn btn-primary' href='adopt.php?id=" . $rowa['id'] . "'>Take me Home</a></td>
 </div>
 </div>
     </div>";
@@ -137,6 +132,7 @@ mysqli_close($connect);
             <?= $tbody ?>
         </div>
     </div>
+    <br>
     <?php require_once 'components/footer.php' ?>
 </body>
 
