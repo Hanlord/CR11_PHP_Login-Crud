@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'components/db_connect.php';
+
 
 // if adm will redirect to dashboard
 if (isset($_SESSION['adm'])) {
@@ -13,33 +13,89 @@ if (!isset($_SESSION['adm']) && !isset($_SESSION['user'])) {
     exit;
 }
 
+require_once 'components/db_connect.php';
+
+if (isset($_POST["submit"])) {
+    $animal_id = $_POST["submit"];
+    $user_id = $_SESSION["user"];
+    // $adoption_date = $_POST["adoption_date"];
+
+    $sql1 = "INSERT INTO pet_adoption(fk_animal_id, fk_user_id) VALUES ($animal_id,$user_id)";
+    $sql2 = "UPDATE animal set status = 'adopted' WHERE id = $animal_id";
+    $result2 = mysqli_query($connect, $sql2);
+    $result3 = mysqli_query($connect, $sql1);
+    if ($result3 && $result2) {
+        echo "Success";
+        mysqli_close($connect);
+        header("Location: home.php");
+    } else {
+        echo "Error";
+    }
+}
+
+if (isset($_GET["submit2"])) {
+    htmlentities($_GET['submit2']);
+    $age_id = $_GET["submit2"];
+    $sql3 = "SELECT `animal`.*, `animal`.`age` FROM `animal` WHERE `animal`.`age` NOT BETWEEN 0 and 7;";
+    $res2 = mysqli_query($connect, "SELECT * FROM animal WHERE id=" . $_SESSION['user']);
+    $rowb = mysqli_fetch_array($res2, MYSQLI_ASSOC);
+    $result4 = mysqli_query($connect, $sql3);
+    $tbody2 = '';
+    if (mysqli_num_rows($result4)  > 0) {
+        while ($rowb = mysqli_fetch_array($result4, MYSQLI_ASSOC)) {
+            $tbody2 .= "
+          <div class='container mt-2 col-lg-4 rows-col-md-2 rows-col-sm-1 d-flex justify-content-center animate__animated animate__fadeInLeft'>
+          <div class='card' style='width: 18rem;'>
+    <img src='pictures/" . $rowb['picture'] . "' class='card-img-top' alt='...'>
+    <div class='card-body'>
+      <h5 class='card-title'>" . $rowb['name'] . "</h5>
+      <p> " . $rowb['live_location'] . "</p>
+      <p> " . $rowb['age'] . "</p>
+      <p> " . $rowb['status'] . "</p>
+      <form method='POST'>
+      <input class='btn btn-success' type='submit' name='submit' value='take me Home'>
+      </form>
+    </div>
+    </div>
+        </div>";
+        };
+    } else {
+        $tbody2 =  "<tr><td colspan='5'><center>No Data Available </center></td></tr>";
+    }
+}
+
+
 // select logged-in users details - procedural style
+$sql = "SELECT * FROM animal WHERE status = 'available'";
 $res = mysqli_query($connect, "SELECT * FROM users WHERE id=" . $_SESSION['user']);
 $row = mysqli_fetch_array($res, MYSQLI_ASSOC);
-
-$sql = "SELECT * FROM animal";
-$result = mysqli_query($connect ,$sql);
-$tbody= ''; 
-if(mysqli_num_rows($result)  > 0) {     
-    while($rowa = mysqli_fetch_array($result, MYSQLI_ASSOC)){ 
-      $tbody .= "
+$result = mysqli_query($connect, $sql);
+$tbody = '';
+if (mysqli_num_rows($result)  > 0) {
+    while ($rowa = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+        $tbody .= "
       <div class='container mt-2 col-lg-4 rows-col-md-2 rows-col-sm-1 d-flex justify-content-center animate__animated animate__fadeInLeft'>
       <div class='card' style='width: 18rem;'>
 <img src='pictures/" . $rowa['picture'] . "' class='card-img-top' alt='...'>
 <div class='card-body'>
   <h5 class='card-title'>" . $rowa['name'] . "</h5>
-  <p> ".$rowa['live_location']. "</p>
+  <p> " . $rowa['live_location'] . "</p>
+  <p> " . $rowa['age'] . "</p>
+  <p> " . $rowa['status'] . "</p>
+  <form method='POST'>
+  <input class='btn btn-success' type='submit' name='submit' value='take me Home'>
+  </form>
 </div>
 </div>
-    </div>"
-      ;
-   };
+    </div>";
+    };
 } else {
     $tbody =  "<tr><td colspan='5'><center>No Data Available </center></td></tr>";
 }
 
 
 mysqli_close($connect);
+
 ?>
 
 <!DOCTYPE html>
@@ -64,12 +120,12 @@ mysqli_close($connect);
 </head>
 
 <body>
-<?php require_once 'components/navbar.php' ?>
-<br>
+    <?php require_once 'components/navbar.php' ?>
+    <br>
     <div class="container">
         <div class="hero">
             <img class="userImage" src="pictures/<?php echo $row['picture']; ?>" alt="<?php echo $row['first_name']; ?>">
-            <p class="text-white">Hi <?php echo $row['first_name']; ?></p>
+            <p class="text-white">Hi <?php echo $row['first_name'] . " " . $row['email']; ?></p>
         </div>
         <a href="logout.php?logout" class="btn btn-danger">Sign Out</a>
         <a href="update.php?id=<?php echo $_SESSION['user'] ?>" class="btn btn-warning">Update your profile</a>
@@ -78,8 +134,11 @@ mysqli_close($connect);
     <div class="container">
         <br>
         <div class="row rows-col-lg-4 rows-col-md-2 rows-col-sm-1 animate__animated animate__fadeInLeft">
-          <?= $tbody ?>
+            <?= $tbody ?>;
+            <?= $tbody2 ?>
         </div>
-      </div>
+    </div>
+    <?php require_once 'components/footer.php' ?>
 </body>
+
 </html>

@@ -11,9 +11,10 @@ if (!isset($_SESSION['adm']) && !isset($_SESSION['user'])) {
     header("Location: ../index.php");
     exit;
 }
-
+$available = "SELECT * FROM animal WHERE status = 'available'";
 $sql = "SELECT * FROM animal";
 $result = mysqli_query($connect, $sql);
+$result2 = mysqli_query($connect, $available);
 $tbody = ''; //this variable will hold the body for the table
 if (mysqli_num_rows($result)  > 0) {
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
@@ -21,6 +22,11 @@ if (mysqli_num_rows($result)  > 0) {
             <td><img class='img-thumbnail' src='../pictures/" . $row['picture'] . "'</td>
             <td>" . $row['name'] . "</td>
             <td>" . $row['live_location'] . "</td>
+            <td>" . $row['age'] . "</td>
+            <td>" . $row['size'] . "</td>
+            <td>" . $row['vaccinated'] . "</td>
+            <td>" . $row['breed'] . "</td>
+            <td>" . $row['status'] . "</td>
             <td><a href='update.php?id=" . $row['id'] . "'><button class='btn btn-primary btn-sm' type='button'>Edit</button></a>
             <a href='delete.php?id=" . $row['id'] . "'><button class='btn btn-danger btn-sm' type='button'>Delete</button></a></td>
             </tr>";
@@ -62,7 +68,7 @@ mysqli_close($connect);
 </head>
 
 <body>
-<?php require_once '../components/navbar.php' ?>
+    <?php require_once '../components/navbar.php' ?>
     <div class="manageProduct w-75 mt-3">
         <div class='mb-3'>
             <a href="create.php"><button class='btn btn-primary' type="button">Add animal</button></a>
@@ -75,7 +81,19 @@ mysqli_close($connect);
                     <th>Picture</th>
                     <th>Name</th>
                     <th>Location</th>
-                    <th>Action</th>
+                    
+                    <form method="POST">
+                        <label for="animal"><th>Age</th></label>
+                        <select name="animal" id="animal">
+                            <option value="all">All</option>
+                            <option value="available" ?php $available; ?>available</option>
+                            <option value="adopted">adopted</option>
+                        </select>
+                        <th>Size</th>
+                        <th>Vaccination</th>
+                        <th>Breed</th>
+                        <th>Status</th>
+                        <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -85,4 +103,5 @@ mysqli_close($connect);
     </div>
     <?php require_once '../components/footer.php' ?>
 </body>
+
 </html>
